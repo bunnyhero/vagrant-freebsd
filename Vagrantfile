@@ -21,5 +21,17 @@ Vagrant.configure("2") do |config|
     vb.customize ["modifyvm", :id, "--audio", "none"]
     vb.customize ["modifyvm", :id, "--nictype1", "virtio"]
     vb.customize ["modifyvm", :id, "--nictype2", "virtio"]
+
   end
+
+  config.vm.provision "ansible" do |ansible|
+    # Example. Modify this line as needed
+    ansible.playbook = "vagrant.yml"
+  
+    # Tell Ansible where to find Python interpreter
+    ansible.host_vars = {
+      "default" => {"ansible_python_interpreter" => "/usr/local/bin/python"}
+    }
+  end
+
 end
